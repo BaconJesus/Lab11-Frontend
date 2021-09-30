@@ -89,6 +89,30 @@ const routes = [
     component: OrganizerForm
   },
   {
+    path: '/organizers/:id',
+    name: 'organizerDetail',
+    props: true,
+    component: OrganizerDetail,
+    beforeEnter: (to) => {
+      return OrganizerService.getOrganizer(to.params.id) // Return and params.id
+          .then((response) => {
+            // Still need to set the data here
+            GStore.organizer = response.data // <--- Store the event
+          })
+          .catch((error) => {
+            if (error.response && error.response.status == 404) {
+              return {
+                // <--- Return
+                name: '404Resource',
+                params: { resource: 'organizer' }
+              }
+            } else {
+              return { name: 'NetworkError' } // <--- Return
+            }
+          })
+    }
+  },
+  {
     path: '/404/:resource',
     name: '404Resource',
     component: NotFound,
