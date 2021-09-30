@@ -84,6 +84,11 @@ const routes = [
     ]
   },
   {
+    path: '/add-organizer',
+    name: 'AddOrganizer',
+    component: OrganizerForm
+  },
+  {
     path: '/404/:resource',
     name: '404Resource',
     component: NotFound,
